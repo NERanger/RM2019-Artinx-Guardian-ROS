@@ -4,22 +4,22 @@ camera: {
   camera_path: "/dev/video0"
 
   camera_matrix {
-    data: 1037.265047
+    data: 632.344386
     data: 0.0
-    data: 314.194740
+    data: 289.779198
     data: 0.0
-    data: 1045.828726
-    data: 290.963582
+    data: 634.529978
+    data: 260.221404
     data: 0.0
     data: 0.0
     data: 1.0
   }
 
   camera_distortion {
-    data: -0.274787
-    data: -0.616604  
-    data: -0.008368
-    data: 0.000330
+    data: 0.013221
+    data: -0.098940   
+    data: 0.011448
+    data: -0.013040
     data: 0.0
   }
 
