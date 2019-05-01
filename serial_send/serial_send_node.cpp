@@ -9,10 +9,13 @@
 #include "serial_send_node.h"
 
 serial::Serial board_serial;
+serial_send_t serial_send;
+
+double last_yaw_angle, last_pitch_angle;
 uint8_t output_buffer[OUTPUT_BUFFER_SIZE];
 f64_uchar_u gimbal_yaw_angle_f64, gimbal_yaw_angle_uchar, gimbal_pitch_angle_f64, gimbal_pitch_angle_uchar;
 
-void setGimbalControlSerialBuffer(const roborts_msgs::GimbalAngle::ConstPtr& msg, uint8_t *buffer, size_t size);
+void setGimbalControlSerialBuffer(const serial_send_t* msg, uint8_t *buffer, size_t size);
 
 /**
  *
@@ -20,14 +23,23 @@ void setGimbalControlSerialBuffer(const roborts_msgs::GimbalAngle::ConstPtr& msg
  */
 void serialSendNodeCallback(const roborts_msgs::GimbalAngle::ConstPtr& msg)
 {
-  ROS_INFO("gimbal cmd:\nYAW_MODE:[%d]\nPITCH_MODE:[%d]\nYAW_ANGLE:[%f]\nPITCH_ANGLE:[%f]", msg->yaw_mode
-                                                                                          , msg->pitch_mode
-                                                                                          , msg->yaw_angle
-                                                                                          , msg->pitch_angle);
 
-  setGimbalControlSerialBuffer(msg, output_buffer, OUTPUT_BUFFER_SIZE);
+  serial_send.yaw_mode = msg->yaw_mode;
+  serial_send.pitch_mode = msg->pitch_mode;
+  serial_send.yaw_angle = msg->yaw_angle * GIMBAL_YAW_CMD_PID_KP + (msg->yaw_angle - last_yaw_angle) * GIMBAL_YAW_CMD_PID_KD;
+  serial_send.pitch_angle = msg->pitch_angle * GIMBAL_PITCH_CMD_PID_KP + (msg->pitch_angle - last_pitch_angle) * GIMBAL_PITCH_CMD_PID_KD;
+
+  ROS_INFO("gimbal cmd:\nYAW_MODE:[%d]\nPITCH_MODE:[%d]\nYAW_ANGLE:[%f]\nPITCH_ANGLE:[%f]", serial_send.yaw_mode
+                                                                                          , serial_send.pitch_mode
+                                                                                          , serial_send.yaw_angle
+                                                                                          , serial_send.pitch_angle);
+
+  setGimbalControlSerialBuffer(&serial_send, output_buffer, OUTPUT_BUFFER_SIZE);
 
   board_serial.write(output_buffer, OUTPUT_BUFFER_SIZE);
+
+  last_yaw_angle = msg->yaw_angle;
+  last_pitch_angle = msg->pitch_angle;
 }
 
 int main(int argc, char **argv)
@@ -99,7 +111,7 @@ int main(int argc, char **argv)
   return 0;
 }
 
-void setGimbalControlSerialBuffer(const roborts_msgs::GimbalAngle::ConstPtr& msg, uint8_t *buffer, size_t size)
+void setGimbalControlSerialBuffer(const serial_send_t* msg, uint8_t *buffer, size_t size)
 {
   gimbal_yaw_angle_f64.double_data = msg->yaw_angle;
   gimbal_pitch_angle_f64.double_data = msg->pitch_angle;

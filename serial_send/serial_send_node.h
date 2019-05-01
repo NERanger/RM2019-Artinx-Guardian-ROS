@@ -15,6 +15,20 @@
 #define GIMBEL_PITCH_ANGLE_BUFFER_OFFSET  (GIMBEL_YAW_ANGLE_BUFFER_OFFSET + GIMBEL_YAW_ANGLE_BUFFER_SIZE)
 #define GIMBEL_PITCH_ANGLE_BUFFER_SIZE    (GIMBAL_ANGLE_BUFFER_SIZE)
 
+#define GIMBAL_YAW_CMD_PID_KP 0.010f
+#define GIMBAL_PITCH_CMD_PID_KP 0.007f
+#define GIMBAL_YAW_CMD_PID_KD 0.05f
+#define GIMBAL_PITCH_CMD_PID_KD 0.0f
+
+typedef struct 
+{
+    uint8_t yaw_mode;
+    uint8_t pitch_mode;
+    double yaw_angle;
+    double pitch_angle;
+}serial_send_t;
+
+
 typedef union 
 {
     double double_data;
