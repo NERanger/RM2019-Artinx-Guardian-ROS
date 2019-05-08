@@ -46,7 +46,7 @@ float GimbalContrl::GetPitch(float x, float y, float v) {
   float a;
   y_temp = y;
   // by iteration
-  for (int i = 0; i < 20; i++) {
+  /*for (int i = 0; i < 20; i++) {
     a = (float) atan2(y_temp, x);
     y_actual = BulletModel(x, v, a);
     dy = y - y_actual;
@@ -55,7 +55,11 @@ float GimbalContrl::GetPitch(float x, float y, float v) {
       break;
     }
     //printf("iteration num %d: angle %f,temp target y:%f,err of y:%f\n",i+1,a*180/3.1415926535,yTemp,dy);
-  }
+  }*/
+  //Modified by NERanger 20190428
+
+  a = (float) atan2(y_temp, x);
+
   return a;
 
 }

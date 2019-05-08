@@ -4,22 +4,22 @@ camera: {
   camera_path: "/dev/video0"
 
   camera_matrix {
-    data: 1037.265047
+    data: 999.643572
     data: 0.0
-    data: 314.194740
+    data: 321.399554
     data: 0.0
-    data: 1045.828726
-    data: 290.963582
+    data: 1004.454242
+    data: 221.778124
     data: 0.0
     data: 0.0
     data: 1.0
   }
 
   camera_distortion {
-    data: -0.274787
-    data: -0.616604  
-    data: -0.008368
-    data: 0.000330
+    data: -0.349472
+    data: -0.087857  
+    data: -0.002202
+    data: -0.000392
     data: 0.0
   }
 
@@ -33,8 +33,13 @@ camera: {
 
   fps: 100
   auto_exposure: 0
-  exposure_value: 5
-  exposure_time: 2
+  #RED
+  exposure_value: 0
+  exposure_time: 1
+
+  #BLUE
+  #exposure_value: 0
+  #exposure_time: 1
   auto_white_balance: 1
   auto_gain: 0
 }
