@@ -29,6 +29,23 @@ void serialSendNodeCallback(const roborts_msgs::GimbalAngle::ConstPtr& msg)
   serial_send.yaw_angle = msg->yaw_angle * GIMBAL_YAW_CMD_PID_KP + (msg->yaw_angle - last_yaw_angle) * GIMBAL_YAW_CMD_PID_KD;
   serial_send.pitch_angle = msg->pitch_angle * GIMBAL_PITCH_CMD_PID_KP + (msg->pitch_angle - last_pitch_angle) * GIMBAL_PITCH_CMD_PID_KD;
 
+  if(serial_send.yaw_angle > GIMBAL_YAW_CMD_MAX)
+  {
+    serial_send.yaw_angle = GIMBAL_YAW_CMD_MAX;
+  }
+  if(serial_send.yaw_angle < GIMBAL_YAW_CMD_MIN)
+  {
+    serial_send.yaw_angle = GIMBAL_YAW_CMD_MIN;
+  }
+  if(serial_send.pitch_angle > GIMBAL_PITCH_CMD_MAX)
+  {
+    serial_send.pitch_angle = GIMBAL_PITCH_CMD_MAX;
+  }
+  if(serial_send.pitch_angle < GIMBAL_PITCH_CMD_MIN)
+  {
+    serial_send.pitch_angle = GIMBAL_PITCH_CMD_MIN;
+  }
+
   ROS_INFO("gimbal cmd:\nYAW_MODE:[%d]\nPITCH_MODE:[%d]\nYAW_ANGLE:[%f]\nPITCH_ANGLE:[%f]", serial_send.yaw_mode
                                                                                           , serial_send.pitch_mode
                                                                                           , serial_send.yaw_angle
