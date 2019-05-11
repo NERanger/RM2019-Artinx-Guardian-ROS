@@ -105,6 +105,10 @@ note that "size" and "square" should match the chess board
 
 "image" and "camera" should match the camera topic name
 
+## auto-run script
+
+<https://www.jianshu.com/p/bdd4a914f523>
+
 ## Copyright and License
 
 RoboRTS is provided under the [GPL-v3](COPYING).
