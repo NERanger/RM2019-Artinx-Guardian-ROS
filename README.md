@@ -107,7 +107,7 @@ note that "size" and "square" should match the chess board
 
 ## auto-run script
 
-<https://www.jianshu.com/p/bdd4a914f523>
+<https://blog.csdn.net/qq_41628231/article/details/81367109>
 
 ## Copyright and License
 
